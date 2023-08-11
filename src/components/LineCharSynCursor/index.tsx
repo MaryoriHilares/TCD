@@ -30,6 +30,7 @@ import {year2001mes1, year2001mes2, year2001mes3, year2001mes4, year2001mes5, ye
   year2022mes1, year2022mes2, year2022mes3, year2022mes4, year2022mes5, year2022mes6, year2022mes7, year2022mes8, year2022mes9, year2022mes10,year2022mes11, year2022mes12,
 
 } from "../../data/lineData"
+
   import LineChart from "../LineChart";
 import { Box, Heading } from "@chakra-ui/react";
 const dataByYear = {
@@ -362,6 +363,8 @@ const dataByYearMont={
 }
 const LineChartSyncCursor = ({ width = 700, height = 150 }) => {
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
+  
+  const [cursorPosition1, setCursorPosition1] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2001);
   const [selectedYear1, setSelectedYear1] = useState<number>(2002);
   const [selectedYear2, setSelectedYear2] = useState<number>(2003);
@@ -488,7 +491,11 @@ const LineChartSyncCursor = ({ width = 700, height = 150 }) => {
         height={height}
         cursorPosition={cursorPosition}
         setCursorPosition={setCursorPosition}
-        color={"#B6BC58"} 
+        xb={150}
+        color={"#B6BC58"}
+        
+        color2={"#40BFBC"}
+        data2={dataForYear2004} 
         />
       </Box>
       <Box marginTop="-15px"> 
@@ -567,9 +574,12 @@ const LineChartSyncCursor = ({ width = 700, height = 150 }) => {
           data={filteredDataM1}
           width={width}
           height={height}
-          cursorPosition={cursorPosition}
-          setCursorPosition={setCursorPosition}
+          cursorPosition={cursorPosition1}
+          setCursorPosition={setCursorPosition1}
+          xb={320}
           color={"#6689c6"}
+          colo2={"#40BFBC"}
+          data2={dataForYear2006}
         />
       </Box>
       <Box marginTop="-15px">
@@ -649,6 +659,9 @@ const LineChartSyncCursor = ({ width = 700, height = 150 }) => {
         cursorPosition={cursorPosition}
         setCursorPosition={setCursorPosition}
         color={"#40BFBC"}
+        color2={"#40BFBC"}
+        xb={500}
+        data2={dataForYear2008}
       />
     </Box>
   );

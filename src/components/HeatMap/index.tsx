@@ -51,7 +51,7 @@ const Heatmap = ({ width, height, data }: HeatmapProps) => {
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <ColorLegend
           height={COLOR_LEGEND_HEIGHT}
-          width={200}
+          width={500}
           colorScale={colorScale}
           interactionData={hoveredCell}
         />

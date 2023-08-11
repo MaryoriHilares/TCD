@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef ,useState} from "react";
 import * as d3 from "d3";
 import { useSpring, animated } from "react-spring";
 
+import { InteractionData, Tooltip } from "./Tooltip";
 const MARGIN = { top: 30, right: 30, bottom: 50, left: 50 };
 
 type DataPoint = { x: number; y: number };
@@ -10,8 +11,11 @@ type LineChartProps = {
   height: number;
   data: DataPoint[];
   color: string;
+  color2: string;
   cursorPosition: number | null;
   setCursorPosition: (position: number | null) => void;
+  xb:number,
+  data2: DataPoint[];
 };
 
 const LineChart = ({
@@ -21,14 +25,20 @@ const LineChart = ({
   cursorPosition,
   setCursorPosition,
   color,
+  color2,
+  xb,
+  data2,
 }: LineChartProps) => {
   // bounds = area inside the graph axis = calculated by substracting the margins
+  const [tooltipData, setTooltipData] = useState<DataPoint | null>(null);
+
   const axesRef = useRef(null);
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
 
   // Y axis
   const [min, max] = d3.extent(data, (d) => d.y);
+  
   const yScale = useMemo(() => {
     return d3
       .scaleLinear()
@@ -68,7 +78,10 @@ const LineChart = ({
   if (!linePath) {
     return null;
   }
-
+  const linePath2 = lineBuilder(data2);
+  if (!linePath2) {
+    return null;
+  }
   //
   const getClosestPoint = (cursorPixelPosition: number) => {
     const x = xScale.invert(cursorPixelPosition);
@@ -86,7 +99,15 @@ const LineChart = ({
 
     return closest;
   };
-
+  const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const closest = getClosestPoint(mouseX);  
+  
+    setTooltipData({ xPos: xScale(closest.x), yPos: mouseY+xb, name: `Value: ${closest.y}`, value: closest.y });
+  };
+  
   //
   const onMouseMove = (e: React.MouseEvent<SVGRectElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -95,11 +116,11 @@ const LineChart = ({
     const closest = getClosestPoint(mouseX);
 
     setCursorPosition(xScale(closest.x));
-  };
+    };
 
   return (
     <div>
-      <svg width={width} height={height}>
+      <svg width={width} height={height} onClick={onSvgClick}>
         <g
           width={boundsWidth}
           height={boundsHeight}
@@ -109,6 +130,13 @@ const LineChart = ({
             d={linePath}
             opacity={1}
             stroke={color}
+            fill="none"
+            strokeWidth={2}
+          />
+          <path
+            d={linePath2} // Agrega la segunda línea
+            opacity={1}
+            stroke={color2}
             fill="none"
             strokeWidth={2}
           />
@@ -138,6 +166,8 @@ const LineChart = ({
           transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
         />
       </svg>
+      <Tooltip interactionData={tooltipData} />
+
     </div>
   );
 };
