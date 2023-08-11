@@ -1350,7 +1350,7 @@ class CalendarHeatmap extends React.Component {
       })
       .attr('width', d => {
         let end = itemScale(d3.timeSecond.offset(moment(d.date), d.value))
-        return Math.max((end - itemScale(moment(d.date))), 1)
+        return Math.max((end - itemScale(moment(d.date)))+40, 1)
       })
       .attr('height', () => {
         return Math.min(projectScale.bandwidth(), this.settings.max_block_height)
