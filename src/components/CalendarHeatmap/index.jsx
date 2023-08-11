@@ -321,7 +321,7 @@ class CalendarHeatmap extends React.Component {
         while (this.settings.width - x < (this.settings.tooltip_width + this.settings.tooltip_padding * 5)) {
           x -= 10
         }
-        let y = this.settings.tooltip_padding * 3
+        let y = this.settings.tooltip_padding * 3+600
 
         // Show tooltip
         this.tooltip.html(tooltip_html)
@@ -569,7 +569,7 @@ class CalendarHeatmap extends React.Component {
         if (this.settings.width - x < (this.settings.tooltip_width + this.settings.tooltip_padding * 3)) {
           x -= this.settings.tooltip_width + this.settings.tooltip_padding * 2
         }
-        let y = calcItemY(d) + this.settings.item_size
+        let y = calcItemY(d) + this.settings.item_size+600
 
         // Show tooltip
         this.tooltip.html(tooltip_html)
@@ -892,7 +892,7 @@ class CalendarHeatmap extends React.Component {
         while (this.settings.width - x < (this.settings.tooltip_width + this.settings.tooltip_padding * 3)) {
           x -= 10
         }
-        let y = dayScale(moment(date).weekday()) + this.settings.tooltip_padding * 2
+        let y = dayScale(moment(date).weekday())+600 + this.settings.tooltip_padding * 2
 
         // Show tooltip
         this.tooltip.html(tooltip_html)
@@ -1184,7 +1184,7 @@ class CalendarHeatmap extends React.Component {
         while (this.settings.width - x < (this.settings.tooltip_width + this.settings.tooltip_padding * 3)) {
           x -= 10
         }
-        let y = dayScale(moment(date).weekday()) + this.settings.tooltip_padding * 1.5
+        let y = dayScale(moment(date).weekday()) +600+ this.settings.tooltip_padding * 1.5
 
         // Show tooltip
         this.tooltip.html(tooltip_html)
@@ -1373,7 +1373,7 @@ class CalendarHeatmap extends React.Component {
         while (this.settings.width - x < (this.settings.tooltip_width + this.settings.tooltip_padding * 3)) {
           x -= 10
         }
-        let y = projectScale(d.name) + projectScale.bandwidth() / 2 + this.settings.tooltip_padding / 2
+        let y = projectScale(d.name) + projectScale.bandwidth() / 2 +600+ this.settings.tooltip_padding / 2
 
         // Show tooltip
         this.tooltip.html(tooltip_html)
